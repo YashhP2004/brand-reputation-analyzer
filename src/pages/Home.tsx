@@ -98,15 +98,16 @@ export default function Home() {
         Brand Reputation Analyzer
       </Typography>
 
-      {/* Main Grid Container */}
+      {/* Main Layout */}
       <Grid container spacing={3}>
-        {/* Left Section: Explore Dashboards */}
+        {/* Left: Existing Dashboards */}
         <Grid item xs={12} md={7}>
           <Paper sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Explore Existing Dashboards
             </Typography>
 
+            {/* Loading Skeletons */}
             {loadingCards && (
               <Grid container spacing={2}>
                 {Array.from({ length: 6 }).map((_, i) => (
@@ -117,6 +118,7 @@ export default function Home() {
               </Grid>
             )}
 
+            {/* Company Cards */}
             {!loadingCards && companies.length > 0 && (
               <Grid container spacing={2}>
                 {companies.map((c, idx) => (
@@ -141,8 +143,9 @@ export default function Home() {
               </Grid>
             )}
 
+            {/* Empty State */}
             {!loadingCards && companies.length === 0 && (
-              <Grid container spacing={0}>
+              <Grid container>
                 <Grid item xs={12}>
                   <Typography color="text.secondary">No companies yet.</Typography>
                 </Grid>
@@ -151,13 +154,14 @@ export default function Home() {
           </Paper>
         </Grid>
 
-        {/* Right Section: New Analysis */}
+        {/* Right: New Analysis */}
         <Grid item xs={12} md={5}>
           <Paper sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Analyze a New Company
             </Typography>
 
+            {/* Form Fields */}
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -183,6 +187,7 @@ export default function Home() {
                 </Button>
               </Grid>
 
+              {/* Loading State */}
               {loading && (
                 <Grid item xs={12}>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -198,6 +203,7 @@ export default function Home() {
         </Grid>
       </Grid>
 
+      {/* Snackbar */}
       <Snackbar
         open={!!snack}
         autoHideDuration={3000}
