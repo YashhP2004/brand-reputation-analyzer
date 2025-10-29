@@ -5,7 +5,7 @@
   publish = "dist"
   
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20.19.0"
 
 # SPA redirect rules for client-side routing
 [[redirects]]
