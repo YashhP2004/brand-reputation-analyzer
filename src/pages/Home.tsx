@@ -13,8 +13,8 @@ import {
   Skeleton,
   Snackbar,
   Alert,
+  Grid, // ← CORRECT IMPORT
 } from '@mui/material'
-import Grid from '@mui/material/Grid'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
@@ -91,122 +91,121 @@ export default function Home() {
   }
 
   return (
-  <Container maxWidth="lg" sx={{ py: 4 }}>
-    <Typography variant="h4" fontWeight={700} gutterBottom>
-      Brand Reputation Analyzer
-    </Typography>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" fontWeight={700} gutterBottom>
+        Brand Reputation Analyzer
+      </Typography>
 
-    {/* MAIN LAYOUT - ONLY ONE container */}
-    <Grid container spacing={3}>
-      {/* LEFT: DASHBOARDS */}
-      <Grid item xs={12} md={7}>
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Explore Existing Dashboards
-          </Typography>
+      {/* MAIN GRID - container + items */}
+      <Grid container spacing={3}>
+        {/* LEFT PANEL */}
+        <Grid item xs={12} md={7}>
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Explore Existing Dashboards
+            </Typography>
 
-          {/* LOADING */}
-          {loadingCards && (
-            <Grid container spacing={2}>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Grid item key={i} xs={12} sm={6} md={4}>
-                  <Skeleton variant="rounded" height={90} />
-                </Grid>
-              ))}
-            </Grid>
-          )}
-
-          {/* COMPANIES */}
-          {!loadingCards && companies.length > 0 && (
-            <Grid container spacing={2}>
-              {companies.map((c, idx) => (
-                <Grid item key={c.id} xs={12} sm={6} md={4}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.05 }}
-                  >
-                    <Card>
-                      <CardActionArea
-                        onClick={() => navigate(`/dashboard/${encodeURIComponent(c.id)}`)}
-                      >
-                        <CardContent>
-                          <Typography fontWeight={600}>{c.display_name}</Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
-          )}
-
-          {/* EMPTY */}
-          {!loadingCards && companies.length === 0 && (
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography color="text.secondary">No companies yet.</Typography>
-              </Grid>
-            </Grid>
-          )}
-        </Paper>
-      </Grid>
-
-      {/* RIGHT: NEW ANALYSIS */}
-      <Grid item xs={12} md={5}>
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="h6" gutterBottom>
-            Analyze a New Company
-          </Typography>
-
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                label="Company Name"
-                fullWidth
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Related Keywords (comma-separated)"
-                fullWidth
-                value={keywords}
-                onChange={(e) => setKeywords(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button variant="contained" onClick={startAnalysis} disabled={loading}>
-                Start Analysis
-              </Button>
-            </Grid>
-            {loading && (
-              <Grid item xs={12}>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <CircularProgress size={20} />
-                  <Typography color="text.secondary">
-                    Running analysis... this may take a couple of minutes.
-                  </Typography>
-                </Stack>
+            {/* LOADING */}
+            {loadingCards && (
+              <Grid container spacing={2}>
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Grid item key={i} xs={12} sm={6} md={4}>
+                    <Skeleton variant="rounded" height={90} />
+                  </Grid>
+                ))}
               </Grid>
             )}
-          </Grid>
-        </Paper>
-      </Grid>
-    </Grid>
 
-    {/* SNACKBAR */}
-    <Snackbar
-      open={!!snack}
-      autoHideDuration={3000}
-      onClose={() => setSnack(null)}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-    >
-      <Alert severity="info" variant="filled" onClose={() => setSnack(null)}>
-        {snack}
-      </Alert>
-    </Snackbar>
-  </Container>
-)
+            {/* COMPANIES */}
+            {!loadingCards && companies.length > 0 && (
+              <Grid container spacing={2}>
+                {companies.map((c, idx) => (
+                  <Grid item key={c.id} xs={12} sm={6} md={4}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                    >
+                      <Card>
+                        <CardActionArea
+                          onClick={() => navigate(`/dashboard/${encodeURIComponent(c.id)}`)}
+                        >
+                          <CardContent>
+                            <Typography fontWeight={600}>{c.display_name}</Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </motion.div>
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+
+            {/* EMPTY */}
+            {!loadingCards && companies.length === 0 && (
+              <Grid container>
+                <Grid item xs={12}>
+                  <Typography color="text.secondary">No companies yet.</Typography>
+                </Grid>
+              </Grid>
+            )}
+          </Paper>
+        </Grid>
+
+        {/* RIGHT PANEL */}
+        <Grid item xs={12} md={5}>
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Analyze a New Company
+            </Typography>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label="Company Name"
+                  fullWidth
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label="Related Keywords (comma-separated)"
+                  fullWidth
+                  value={keywords}
+                  onChange={(e) => setKeywords(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button variant="contained" onClick={startAnalysis} disabled={loading}>
+                  Start Analysis
+                </Button>
+              </Grid>
+              {loading && (
+                <Grid item xs={12}>
+                  <Stack direction="row" alignItems="center" spacing={2}>
+                    <CircularProgress size={20} />
+                    <Typography color="text.secondary">
+                      Running analysis... this may take a couple of minutes.
+                    </Typography>
+                  </Stack>
+                </Grid>
+              )}
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
+
+      <Snackbar
+        open={!!snack}
+        autoHideDuration={3000}
+        onClose={() => setSnack(null)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity="info" variant="filled" onClose={() => setSnack(null)}>
+          {snack}
+        </Alert>
+      </Snackbar>
+    </Container>
+  )
 }
