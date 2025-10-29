@@ -74,9 +74,7 @@ export default function Home() {
             navigate(`/dashboard/${encodeURIComponent(companyId)}`)
             return
           }
-        } catch {
-          // ignore
-        }
+        } catch {}
         if (Date.now() - start < timeout) {
           setTimeout(poll, 5000)
         } else {
@@ -98,16 +96,16 @@ export default function Home() {
         Brand Reputation Analyzer
       </Typography>
 
-      {/* Main Layout */}
+      {/* MAIN GRID CONTAINER */}
       <Grid container spacing={3}>
-        {/* Left: Existing Dashboards */}
+        {/* LEFT: DASHBOARDS */}
         <Grid item xs={12} md={7}>
           <Paper sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Explore Existing Dashboards
             </Typography>
 
-            {/* Loading Skeletons */}
+            {/* LOADING */}
             {loadingCards && (
               <Grid container spacing={2}>
                 {Array.from({ length: 6 }).map((_, i) => (
@@ -118,7 +116,7 @@ export default function Home() {
               </Grid>
             )}
 
-            {/* Company Cards */}
+            {/* COMPANIES */}
             {!loadingCards && companies.length > 0 && (
               <Grid container spacing={2}>
                 {companies.map((c, idx) => (
@@ -143,7 +141,7 @@ export default function Home() {
               </Grid>
             )}
 
-            {/* Empty State */}
+            {/* EMPTY */}
             {!loadingCards && companies.length === 0 && (
               <Grid container>
                 <Grid item xs={12}>
@@ -154,14 +152,13 @@ export default function Home() {
           </Paper>
         </Grid>
 
-        {/* Right: New Analysis */}
+        {/* RIGHT: NEW ANALYSIS */}
         <Grid item xs={12} md={5}>
           <Paper sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Analyze a New Company
             </Typography>
 
-            {/* Form Fields */}
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -171,7 +168,6 @@ export default function Home() {
                   onChange={(e) => setCompanyName(e.target.value)}
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   label="Related Keywords (comma-separated)"
@@ -180,14 +176,11 @@ export default function Home() {
                   onChange={(e) => setKeywords(e.target.value)}
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <Button variant="contained" onClick={startAnalysis} disabled={loading}>
                   Start Analysis
                 </Button>
               </Grid>
-
-              {/* Loading State */}
               {loading && (
                 <Grid item xs={12}>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -203,7 +196,7 @@ export default function Home() {
         </Grid>
       </Grid>
 
-      {/* Snackbar */}
+      {/* SNACKBAR */}
       <Snackbar
         open={!!snack}
         autoHideDuration={3000}
