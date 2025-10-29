@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react'
 const timers: Record<string, NodeJS.Timeout> = {}
 
 export function useSentimentSSE(companyId: string, onData: (data: any) => void) {
-  const esRef = useRef<EventSource | null>(null)
   const onDataRef = useRef(onData)
   onDataRef.current = onData
 
